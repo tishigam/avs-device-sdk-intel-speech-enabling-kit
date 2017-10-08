@@ -29,6 +29,8 @@
 #elif KWD_HARDWARE
 #if defined(SOCK_HW_CTRL)
 #include <Socket/SocketHardwareController.h>
+#elif defined(ALSA_HW_CTRL)
+#include <AlsaController/AlsaHardwareController.h>
 #endif
 #include <HardwareController/AbstractHardwareController.h>
 #include <Hardware/HardwareKeywordDetector.h>
@@ -490,6 +492,8 @@ bool SampleApplication::initialize(
 
 #if defined(SOCK_HW_CTRL)
     controller = kwd::SocketHardwareController::create("localhost", 5000);
+#elif defined(ALSA_HW_CTRL)
+    controller = kwd::AlsaHardwareController::create("hw:0", "Alexa");
 #endif
 
     m_keywordDetector = kwd::HardwareKeywordDetector::create(
