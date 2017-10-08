@@ -20,6 +20,7 @@
 #include "SampleApp/KeywordObserver.h"
 #include "SampleApp/SampleApplication.h"
 #include "SampleApp/StartPortAudioStreamObserver.h"
+#include "SampleApp/StopPortAudioStreamObserver.h"
 
 #ifdef KWD_KITTAI
 #include <KittAi/KittAiKeyWordDetector.h>
@@ -505,11 +506,21 @@ bool SampleApplication::initialize(
 
     auto startMicObserver = StartPortAudioStreamObserver::create(micWrapper);
     if(!startMicObserver) {
-        alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to create StartPortAudioStreamObserver!");
+        alexaClientSDK::sampleApp::ConsolePrinter::simplePrint(
+                "Failed to create StartPortAudioStreamObserver!");
         return false;
     }
 
     m_keywordDetector->addKeyWordObserver(startMicObserver);
+
+    auto stopMicObserver = StopPortAudioStreamObserver::create(micWrapper);
+    if(!stopMicObserver) {
+        alexaClientSDK::sampleApp::ConsolePrinter::simplePrint(
+                "Failed to create StopPortAudioStreamObserver!");
+        return false;
+    }
+
+    client->addAlexaDialogStateObserver(stopMicObserver);
 #endif
 
     // If wake word is enabled, then creating the interaction manager with a wake word audio provider.
