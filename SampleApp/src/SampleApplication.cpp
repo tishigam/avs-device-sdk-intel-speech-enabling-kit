@@ -21,6 +21,7 @@
 #include "SampleApp/AipObserver.h"
 #include "SampleApp/SampleApplication.h"
 #include "SampleApp/StopPortAudioStreamObserver.h"
+#include "SampleApp/ResetAppTimer.h"
 
 #ifdef KWD_KITTAI
 #include <KittAi/KittAiKeyWordDetector.h>
@@ -569,6 +570,9 @@ bool SampleApplication::initialize(
         alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Failed to create UserInputManager!");
         return false;
     }
+
+    auto resetTimer = ResetAppTimer::create(client, std::chrono::milliseconds(1000));
+    client->addAlexaDialogStateObserver(resetTimer);
 
     return true;
 }
