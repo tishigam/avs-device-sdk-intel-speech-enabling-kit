@@ -574,8 +574,8 @@ bool SampleApplication::initialize(
         return false;
     }
 
-    auto resetTimer = ResetAppTimer::create(client, RESET_TIMEOUT);
-    client->addAlexaDialogStateObserver(resetTimer);
+    // auto resetTimer = ResetAppTimer::create(client, RESET_TIMEOUT);
+    // client->addAlexaDialogStateObserver(resetTimer);
 
     return true;
 }
