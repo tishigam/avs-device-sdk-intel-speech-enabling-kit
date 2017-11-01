@@ -24,7 +24,6 @@
 // #include "SampleApp/StartPortAudioStreamObserver.h"
 // #include "SampleApp/StopPortAudioStreamObserver.h"
 #include "SampleApp/PortAudioObserver.h"
-#include "SampleApp/ResetAppTimer.h"
 
 #ifdef KWD_KITTAI
 #include <KittAi/KittAiKeyWordDetector.h>
