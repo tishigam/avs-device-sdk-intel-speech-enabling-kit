@@ -20,6 +20,7 @@
 
 #include <mutex>
 #include <thread>
+#include <atomic>
 
 #include <AVSCommon/AVS/AudioInputStream.h>
 
@@ -52,6 +53,13 @@ public:
      * @return Whether the start was successful.
      */
     bool startStreamingMicrophoneData();
+
+    /**
+     * Check if the audio stream is currently started or stopped.
+     *
+     * @return @c true if started, @c false otherwise
+     */
+    bool isStreaming();
 
     /**
      * Destructor.
@@ -102,9 +110,13 @@ private:
      * threads.
      */
     std::mutex m_mutex;
+
+    /// Flag for if the audio stream is streaming or not
+    std::atomic<bool> m_streaming;
 };
 
 }  // namespace sampleApp
 }  // namespace alexaClientSDK
+
 
 #endif  // ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_PORTAUDIOMICROPHONEWRAPPER_H_
