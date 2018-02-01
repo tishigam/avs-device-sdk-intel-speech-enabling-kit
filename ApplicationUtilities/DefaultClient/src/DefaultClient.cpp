@@ -695,12 +695,5 @@ DefaultClient::~DefaultClient() {
     }
 }
 
-
-void DefaultClient::addObserver(
-        std::shared_ptr<avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface> observer)
-{
-    m_audioInputProcessor->addObserver(observer);
-}
-
 }  // namespace defaultClient
 }  // namespace alexaClientSDK

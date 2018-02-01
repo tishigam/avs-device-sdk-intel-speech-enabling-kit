@@ -349,8 +349,6 @@ public:
      */
     std::future<bool> notifyOfHoldToTalkEnd();
 
-    void addObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface> observer);
-
     /**
      * Ends a tap to talk interaction by forcing the client to stop streaming audio data to the cloud and ending any
      * currently ongoing recognize interactions.
