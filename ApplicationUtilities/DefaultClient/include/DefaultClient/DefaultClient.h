@@ -38,6 +38,7 @@
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
@@ -347,6 +348,8 @@ public:
      * called in the wrong state.
      */
     std::future<bool> notifyOfHoldToTalkEnd();
+
+    void addObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface> observer);
 
     /**
      * Ends a tap to talk interaction by forcing the client to stop streaming audio data to the cloud and ending any

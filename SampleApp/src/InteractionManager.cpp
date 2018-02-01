@@ -37,7 +37,7 @@ InteractionManager::InteractionManager(
         m_isHoldOccurring{false},
         m_isTapOccurring{false},
         m_isMicOn{true} {
-    m_micWrapper->startStreamingMicrophoneData();
+    // m_micWrapper->startStreamingMicrophoneData();
 };
 
 void InteractionManager::begin() {
