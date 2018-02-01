@@ -21,7 +21,6 @@
 #include <ACL/Transport/PostConnectObject.h>
 #include <ADSL/MessageInterpreter.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
-#include <AVSCommon/Utils/TestLogger/DirectiveLogger.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
 #include <ContextManager/ContextManager.h>
 #include <Settings/SettingsUpdatedEventSender.h>
@@ -30,8 +29,6 @@
 
 namespace alexaClientSDK {
 namespace defaultClient {
-
-using namespace avsCommon::utils::testLogger;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("DefaultClient");
