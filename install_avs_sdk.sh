@@ -106,8 +106,6 @@ startsample_script="$sdk_folder/startsample.sh"
 
 # Asound config file
 ASOUND_CONFIG_FILE="$git_repo/asound.conf"
-
-
 # Your device serial number. Cannot be blank, but can be any combination of characters.
 SDK_CONFIG_DEVICE_SERIAL_NUMBER='123456789'
 # Audio file locations. These should match their locations on the system.
