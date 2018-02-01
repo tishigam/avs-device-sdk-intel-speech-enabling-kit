@@ -85,6 +85,9 @@ static const std::string ENDPOINT_KEY("endpoint");
 /// Key for setting if display cards are supported or not under the @c SAMPLE_APP_CONFIG_KEY configuration node.
 static const std::string DISPLAY_CARD_KEY("displayCardsSupported");
 
+/// Timeout for reset timer - timeout is currently 3 mintues
+static const std::chrono::milliseconds RESET_TIMEOUT = std::chrono::milliseconds(3 * 60 * 1000);
+
 #ifdef KWD_KITTAI
 /// The sensitivity of the Kitt.ai engine.
 static const double KITT_AI_SENSITIVITY = 0.6;
@@ -501,7 +504,7 @@ bool SampleApplication::initialize(
 #if defined(SOCK_HW_CTRL)
     controller = kwd::SocketHardwareController::create("localhost", 5000);
 #elif defined(ALSA_HW_CTRL)
-    controller = kwd::AlsaHardwareController::create("hw:0", "Alexa");
+    controller = kwd::AlsaHardwareController::create("hw:1", "Alexa");
 #endif
     auto startMicObserver = StartPortAudioStreamObserver::create(micWrapper);
     if(!startMicObserver) {
@@ -571,7 +574,7 @@ bool SampleApplication::initialize(
         return false;
     }
 
-    auto resetTimer = ResetAppTimer::create(client, std::chrono::milliseconds(1000));
+    auto resetTimer = ResetAppTimer::create(client, RESET_TIMEOUT);
     client->addAlexaDialogStateObserver(resetTimer);
 
     return true;
