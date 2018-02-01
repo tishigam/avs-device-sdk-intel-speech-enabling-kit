@@ -56,6 +56,7 @@ add_library(AVSCommon SHARED
     Utils/src/TimePoint.cpp
     Utils/src/TimeUtils.cpp
     Utils/src/Timer.cpp
+    Utils/src/DirectiveLogger.cpp
     Utils/src/UUIDGeneration.cpp)
 
 target_include_directories(AVSCommon PUBLIC
