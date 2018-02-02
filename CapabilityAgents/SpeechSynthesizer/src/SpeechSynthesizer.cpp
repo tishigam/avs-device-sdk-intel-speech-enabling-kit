@@ -678,8 +678,6 @@ void SpeechSynthesizer::executePlaybackError(const avsCommon::utils::mediaPlayer
                 speakInfo, avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR, error);
             lock.lock();
         }
-        std::lock_guard<std::mutex> lock(m_speakInfoQueueMutex);
-        m_speakInfoQueue.clear();
     }
 }
 

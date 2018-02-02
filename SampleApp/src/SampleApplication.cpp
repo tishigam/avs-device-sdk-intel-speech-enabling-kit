@@ -18,11 +18,7 @@
 #include "SampleApp/ConnectionObserver.h"
 #include "SampleApp/GuiRenderer.h"
 #include "SampleApp/KeywordObserver.h"
-#include "SampleApp/AipObserver.h"
 #include "SampleApp/SampleApplication.h"
-#include "SampleApp/StopPortAudioStreamObserver.h"
-// #include "SampleApp/StartPortAudioStreamObserver.h"
-// #include "SampleApp/StopPortAudioStreamObserver.h"
 #include "SampleApp/PortAudioObserver.h"
 
 #ifdef KWD_KITTAI

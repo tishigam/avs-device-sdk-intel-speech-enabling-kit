@@ -425,14 +425,6 @@ bool DefaultClient::initialize(
         }
     }
 
-    auto directiveLogger = DirectiveLogger::create(exceptionSender);
-    if (!m_directiveSequencer->addDirectiveHandler(directiveLogger)) {
-        ACSDK_ERROR(LX("initializeFailed")
-                        .d("reason", "unableToRegisterDirectiveHandler")
-                        .d("directiveHandler", "DirectiveLogger"));
-        return false;
-    }
-
     /*
      * The following two statements show how to register capability agents to the directive sequencer.
      */
@@ -576,7 +568,6 @@ void DefaultClient::removeSettingObserver(
     m_settings->removeSingleSettingObserver(key, observer);
 }
 
-
 void DefaultClient::addNotificationsObserver(
     std::shared_ptr<avsCommon::sdkInterfaces::NotificationsObserverInterface> observer) {
     m_notificationsCapabilityAgent->addObserver(observer);
@@ -585,6 +576,7 @@ void DefaultClient::addNotificationsObserver(
 void DefaultClient::removeNotificationsObserver(
     std::shared_ptr<avsCommon::sdkInterfaces::NotificationsObserverInterface> observer) {
     m_notificationsCapabilityAgent->removeObserver(observer);
+}
 
 void DefaultClient::addAudioInputProcessorObserver(
         std::shared_ptr<avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface> observer) {
