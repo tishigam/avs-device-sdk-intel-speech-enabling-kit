@@ -24,6 +24,7 @@ using avsCommon::avs::AudioInputStream;
 static const int NUM_INPUT_CHANNELS = 1;
 static const int NUM_OUTPUT_CHANNELS = 0;
 static const double SAMPLE_RATE = 16000;
+static const char* DEVICE_NAME = "s1000";
 static const unsigned long PREFERRED_SAMPLES_PER_CALLBACK = paFramesPerBufferUnspecified;
 
 /**
@@ -98,20 +99,51 @@ bool PortAudioMicrophoneWrapper::closeStream() {
 bool PortAudioMicrophoneWrapper::openStream() {
     PaError err;
     err = Pa_Initialize();
+    int numDevices, devId;
+    const   PaDeviceInfo *deviceInfo;
+
     if (err != paNoError) {
         printPaError(err, "Failed to initialize PortAudio");
         return false;
     }
 
-    err = Pa_OpenDefaultStream(
-        &m_paStream,
-        NUM_INPUT_CHANNELS,
-        NUM_OUTPUT_CHANNELS,
-        paInt16,
-        SAMPLE_RATE,
-        PREFERRED_SAMPLES_PER_CALLBACK,
-        PortAudioCallback,
-        this);
+    numDevices = Pa_GetDeviceCount();
+    if( numDevices < 0 ) {
+        err = numDevices;
+        printPaError(err, "ERROR: Pa_CountDevices returned error\n");
+        return false;
+    }
+    for( devId=0; devId < numDevices; devId++ ) {
+        deviceInfo = Pa_GetDeviceInfo( devId );
+        if (strncmp(deviceInfo->name, DEVICE_NAME, 5) == 0)
+        {
+            break;
+        }
+    }
+    if( devId == numDevices) {
+        printPaError(err, "ERROR: Could not find audio recording device!\n");
+        return false;
+    }
+
+    double srate = SAMPLE_RATE;
+    unsigned long framesPerBuffer = paFramesPerBufferUnspecified;
+    PaStreamParameters inputParameters;
+    bzero( &inputParameters, sizeof( inputParameters ) );
+    inputParameters.channelCount = NUM_INPUT_CHANNELS;
+    inputParameters.device = devId;
+    inputParameters.hostApiSpecificStreamInfo = NULL;
+    inputParameters.sampleFormat = paInt16;
+    inputParameters.suggestedLatency = deviceInfo->defaultLowInputLatency ;
+    inputParameters.hostApiSpecificStreamInfo = NULL;
+    err = Pa_OpenStream(
+                    &m_paStream,
+                    &inputParameters,
+                    NULL,
+                    srate,
+                    framesPerBuffer,
+                    paNoFlag,
+                    PortAudioCallback,
+                    (void *)this );
 
     if (err != paNoError) {
         printPaError(err, "Failed to open PortAudio default stream");
