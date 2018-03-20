@@ -30,6 +30,7 @@ using avsCommon::avs::AudioInputStream;
 static const int NUM_INPUT_CHANNELS = 1;
 static const int NUM_OUTPUT_CHANNELS = 0;
 static const double SAMPLE_RATE = 16000;
+//static const char* DEVICE_NAME = "s1000";
 static const unsigned long PREFERRED_SAMPLES_PER_CALLBACK = paFramesPerBufferUnspecified;
 
 /**
@@ -94,12 +95,12 @@ bool PortAudioMicrophoneWrapper::initialize() {
 bool PortAudioMicrophoneWrapper::closeStream() {
     PaError err = Pa_CloseStream(m_paStream);
     if(err != paNoError) {
-        ConsolePrinter::simplePrint(err, "Failed to close PortAudio default stream");
+        printPaError(err, "Failed to close PortAudio default stream");
         return false;
     }
     err = Pa_Terminate();
     if(err != paNoError) {
-        ConsolePrinter::simplePrint(err, "Failed to terminate PortAudio");
+        printPaError(err, "Failed to terminate PortAudio");
         return false;
     }
     return true;
@@ -108,6 +109,9 @@ bool PortAudioMicrophoneWrapper::closeStream() {
 bool PortAudioMicrophoneWrapper::openStream() {
     PaError err;
     err = Pa_Initialize();
+//    int numDevices, devId;
+//    const   PaDeviceInfo *deviceInfo;
+
     if (err != paNoError) {
         ConsolePrinter::simplePrint("Failed to initialize PortAudio");
         return false;
@@ -205,9 +209,6 @@ int PortAudioMicrophoneWrapper::PortAudioCallback(
     return paContinue;
 }
 
-bool PortAudioMicrophoneWrapper::isStreaming() {
-    return m_streaming;
-	
 bool PortAudioMicrophoneWrapper::getConfigSuggestedLatency(PaTime& suggestedLatency) {
     bool latencyInConfig = false;
     auto config = avsCommon::utils::configuration::ConfigurationNode::getRoot()[SAMPLE_APP_CONFIG_ROOT_KEY]
@@ -223,6 +224,11 @@ bool PortAudioMicrophoneWrapper::getConfigSuggestedLatency(PaTime& suggestedLate
 
     return latencyInConfig;
 }
+
+bool PortAudioMicrophoneWrapper::isStreaming() {
+    return m_streaming;
+}
+
 
 }  // namespace sampleApp
 }  // namespace alexaClientSDK

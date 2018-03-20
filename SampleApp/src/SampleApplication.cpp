@@ -667,7 +667,7 @@ bool SampleApplication::initialize(
         wakeWordAudioProvider,
         espProvider,
         espModifier,
-			startPaStream);
+		startPaStream);
 
 #else
     // If wake word is not enabled, then creating the interaction manager without a wake word audio provider.

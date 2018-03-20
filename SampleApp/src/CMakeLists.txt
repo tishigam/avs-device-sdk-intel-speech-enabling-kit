@@ -6,6 +6,7 @@ list(APPEND SampleApp_SOURCES
     InteractionManager.cpp
     KeywordObserver.cpp
     PortAudioMicrophoneWrapper.cpp
+    PortAudioObserver.cpp
     UIManager.cpp
     UserInputManager.cpp
     SampleApplication.cpp
@@ -24,6 +25,8 @@ target_include_directories(SampleApp PUBLIC
     "${SampleApp_SOURCE_DIR}/include"
     "${MediaPlayer_SOURCE_DIR}/include"
     "${AudioResources_SOURCE_DIR}/include"
+    "${RegistrationManager_SOURCE_DIR}/include"
+    "${ESP_SOURCE_DIR}/include"
     "${PORTAUDIO_INCLUDE_DIR}"
     "${SOCKETIO_INCLUDE_DIR}")
 
@@ -33,10 +36,7 @@ target_link_libraries(SampleApp
     MediaPlayer 
     "${PORTAUDIO_LIB_PATH}"
     "${SOCKETIO_LIB_PATH}"
-    "${BOOST_LIB_PATH}")
-    "${RegistrationManager_SOURCE_DIR}/include"
-    "${ESP_SOURCE_DIR}/include"
-    "${PORTAUDIO_INCLUDE_DIR}")
+    "${BOOST_LIB_PATH}")  
 
 target_link_libraries(SampleApp 
     DefaultClient

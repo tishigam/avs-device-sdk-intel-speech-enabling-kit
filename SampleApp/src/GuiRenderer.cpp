@@ -57,7 +57,12 @@ static const std::string RENDER_PLAYER_INFO_HEADER =
     "#     RenderPlayerInfoCard                                                    \n"
     "#-----------------------------------------------------------------------------\n";
 
-void GuiRenderer::sendDisplayServer(const std::string& jsonPayload) {
+static const std::string RENDER_PLAYER_INFO_CLEARED =
+    "##############################################################################\n"
+    "#     RenderPlayerInfoCard - Cleared                                          \n"
+    "##############################################################################\n";
+	
+	void GuiRenderer::sendDisplayServer(const std::string& jsonPayload) {
     static sio::client disp_server;
     static const std::string DISP_SERVER = "http://localhost:3001";
 
@@ -76,13 +81,6 @@ void GuiRenderer::sendDisplayServer(const std::string& jsonPayload) {
         ConsolePrinter::simplePrint("No display server connection.");
     }
 }
-
-void GuiRenderer::renderTemplateCard(const std::string& jsonPayload) {
-
-static const std::string RENDER_PLAYER_INFO_CLEARED =
-    "##############################################################################\n"
-    "#     RenderPlayerInfoCard - Cleared                                          \n"
-    "##############################################################################\n";
 
 void GuiRenderer::renderTemplateCard(const std::string& jsonPayload, avsCommon::avs::FocusState focusState) {
     rapidjson::Document payload;
@@ -151,7 +149,6 @@ void GuiRenderer::renderPlayerInfoCard(
     buffer += jsonPayload + "\n";
     buffer += RENDER_FOOTER;
     ConsolePrinter::simplePrint(buffer);
-
     sendDisplayServer(jsonPayload);
 }
 
