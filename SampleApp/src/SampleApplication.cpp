@@ -486,6 +486,8 @@ bool SampleApplication::initialize(
 
     client->addNotificationsObserver(userInterfaceManager);
 
+    client->addAlertsObserver(userInterfaceManager);
+
     /*
      * Add GUI Renderer as an observer if display cards are supported.
      */
