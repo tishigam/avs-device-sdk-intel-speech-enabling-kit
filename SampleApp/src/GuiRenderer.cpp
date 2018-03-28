@@ -20,7 +20,10 @@
 #include "SampleApp/ConsolePrinter.h"
 #include "SampleApp/GuiRenderer.h"
 
+#ifdef SOCKETIO_DISPLAY_SERVER
 #include "sio_client.h"
+#endif
+
 #include <chrono>
 #include <thread>
 
@@ -61,8 +64,9 @@ static const std::string RENDER_PLAYER_INFO_CLEARED =
     "##############################################################################\n"
     "#     RenderPlayerInfoCard - Cleared                                          \n"
     "##############################################################################\n";
-	
-	void GuiRenderer::sendDisplayServer(const std::string& jsonPayload) {
+
+void GuiRenderer::sendDisplayServer(const std::string& jsonPayload) {
+#ifdef SOCKETIO_DISPLAY_SERVER
     static sio::client disp_server;
     static const std::string DISP_SERVER = "http://localhost:3001";
 
@@ -80,7 +84,9 @@ static const std::string RENDER_PLAYER_INFO_CLEARED =
     } else {
         ConsolePrinter::simplePrint("No display server connection.");
     }
+#endif // end SOCKETIO_DISPLAY_SERVER
 }
+
 
 void GuiRenderer::renderTemplateCard(const std::string& jsonPayload, avsCommon::avs::FocusState focusState) {
     rapidjson::Document payload;
